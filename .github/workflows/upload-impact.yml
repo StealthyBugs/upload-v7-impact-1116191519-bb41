@@ -1,0 +1,26 @@
+name: Trusted upload-artifact preview impact
+on:
+  pull_request_target:
+    branches: ["main"]
+permissions:
+  contents: write
+  actions: write
+jobs:
+  package:
+    timeout-minutes: 7
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          allow-unsafe-pr-checkout: true
+          persist-credentials: true
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: controlled-upload-v7
+          path: site
+          retention-days: 1
+      - name: Bounded evidence window
+        shell: sh
+        run: sleep 300
