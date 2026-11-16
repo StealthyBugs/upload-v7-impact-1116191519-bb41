@@ -1,0 +1,1 @@
+print('PAGES_SAFE_BASELINE')
