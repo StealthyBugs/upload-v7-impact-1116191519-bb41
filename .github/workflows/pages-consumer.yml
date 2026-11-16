@@ -1,0 +1,16 @@
+name: Existing trusted Pages consumer
+on:
+  repository_dispatch:
+    types: [pages-rce-proof]
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Execute trusted repository proof input
+        run: python3 proof.py
